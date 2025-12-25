@@ -5,26 +5,10 @@
 <title>Worker Onboarding</title>
 
 <style>
-body { font-family: Arial; background:#f2f2f2; }
-.box {
-  max-width:480px;
-  background:#fff;
-  margin:20px auto;
-  padding:20px;
-  border-radius:6px;
-}
-input, select, button {
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-}
-button {
-  background:#1a73e8;
-  color:#fff;
-  border:none;
-  font-size:16px;
-}
-button:disabled { background:#999; }
+body{font-family:Arial;background:#f2f2f2}
+.box{max-width:480px;margin:auto;background:#fff;padding:20px}
+input,select,button{width:100%;padding:10px;margin-top:8px}
+button{background:#1a73e8;color:#fff;border:none}
 </style>
 </head>
 
@@ -37,8 +21,7 @@ button:disabled { background:#999; }
 <input type="date" id="dob" required>
 
 <select id="gender">
-<option>Male</option>
-<option>Female</option>
+<option>Male</option><option>Female</option>
 </select>
 
 <input id="designation" placeholder="Designation">
@@ -64,16 +47,9 @@ button:disabled { background:#999; }
 <input id="education" placeholder="Education">
 <input id="experience" placeholder="Scaffolding Experience">
 
-<label>Aadhaar Front</label>
 <input type="file" id="af">
-
-<label>Aadhaar Back</label>
 <input type="file" id="ab">
-
-<label>Bank Passbook</label>
 <input type="file" id="bp">
-
-<label>Passport Photo</label>
 <input type="file" id="photo">
 
 <button id="submit">Submit</button>
@@ -81,24 +57,20 @@ button:disabled { background:#999; }
 </div>
 
 <script>
-const WEB_APP_URL =
-"https://script.google.com/macros/s/AKfycbwoUO7cyEColEfR55Ey0xry85eOACl3knYpewwceRYEKdcqjxqIsaTfxAfEg0JTSTXX/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx1BIMh3xSkzNwWkbSbdXZPp-MCd_qbwwLaDM0q3m01UIHgOAtSNnX4lNsmZ2zYNvfD/exec";
 
-function toBase64(file) {
-  return new Promise(resolve => {
-    if (!file) return resolve("");
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(file);
-  });
-}
+const toBase64 = f => new Promise(r=>{
+  if(!f) return r("");
+  const fr=new FileReader();
+  fr.onload=()=>r(fr.result);
+  fr.readAsDataURL(f);
+});
 
-document.getElementById("form").addEventListener("submit", async e => {
+form.onsubmit = async e => {
   e.preventDefault();
-  const btn = document.getElementById("submit");
-  btn.disabled = true;
+  submit.disabled = true;
 
-  const data = {
+  const payload = {
     name: name.value,
     dob: dob.value,
     gender: gender.value,
@@ -126,20 +98,19 @@ document.getElementById("form").addEventListener("submit", async e => {
   };
 
   const res = await fetch(WEB_APP_URL, {
-    method: "POST",
-    body: JSON.stringify(data)
+    method:"POST",
+    body:JSON.stringify(payload)
   });
 
-  const text = await res.text();
-  if (text === "SUCCESS") {
-    alert("Submitted Successfully");
-    btn.style.display = "none";
-    window.print();
+  const out = await res.json();
+  if(out.status==="SUCCESS"){
+    submit.style.display="none";
+    window.open(out.pdf, "_blank");
   } else {
-    alert(text);
-    btn.disabled = false;
+    alert("Error");
+    submit.disabled=false;
   }
-});
+};
 </script>
 </body>
 </html>
