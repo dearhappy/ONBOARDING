@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worker On-Boarding</title>
+<style>
+body{font-family:Arial;padding:10px}
+input,select,button{width:100%;padding:10px;margin:6px 0}
+button{background:#0a7cff;color:#fff;border:none}
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+<h3>Worker On-Boarding Form</h3>
+
+<form id="form">
+<input placeholder="Full Name" required id="name">
+<input type="date" id="dob" required>
+
+<select id="gender">
+<option>Male</option><option>Female</option>
+</select>
+
+<input placeholder="Designation" id="designation">
+
+<select id="blood">
+<option>A+</option><option>B+</option><option>O+</option>
+</select>
+
+<select id="marital">
+<option>Single</option><option>Married</option>
+</select>
+
+<input placeholder="Father Name" id="father">
+<input placeholder="Contact No" id="contact">
+
+<input placeholder="Emergency Contact Name" id="emgName">
+<input placeholder="Relation" id="emgRel">
+<input placeholder="Emergency Contact No" id="emgNo">
+
+<input placeholder="State" id="state">
+<input placeholder="Work Location" id="work">
+
+<input placeholder="Bank Name" id="bank">
+<input placeholder="Account No" id="acc">
+<input placeholder="IFSC" id="ifsc">
+
+<input placeholder="UAN No" id="uan">
+<input placeholder="ESI / WC Policy" id="esi">
+
+<input placeholder="Aadhaar No" id="aadhaar">
+<input placeholder="PAN No" id="pan">
+
+<input placeholder="Education" id="edu">
+<input placeholder="Scaffolding Experience" id="exp">
+
+<label>Aadhaar Front</label>
+<input type="file" id="af">
+<label>Aadhaar Back</label>
+<input type="file" id="ab">
+<label>Bank Passbook</label>
+<input type="file" id="bp">
+<label>Photo</label>
+<input type="file" id="ph">
+
+<button type="submit" id="submit">Submit</button>
+</form>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnVCRaImBSDMWbNXQ0WwNh6wHl_XEE8ZMp_Gjq1tPf-ojW8bQOoKgjUefpNPn_po1S/exec";
+
+function toBase64(f){return new Promise(r=>{
+const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f);
+});}
+
+document.getElementById("form").onsubmit = async e => {
+e.preventDefault();
+document.getElementById("submit").disabled=true;
+
+const data={
+name:name.value,
+dob:dob.value,
+gender:gender.value,
+designation:designation.value,
+bloodGroup:blood.value,
+maritalStatus:marital.value,
+fatherName:father.value,
+contact:contact.value,
+emergencyName:emgName.value,
+emergencyRelation:emgRel.value,
+emergencyContact:emgNo.value,
+state:state.value,
+workLocation:work.value,
+bankName:bank.value,
+accountNo:acc.value,
+ifsc:ifsc.value,
+uan:uan.value,
+esi:esi.value,
+aadhaar:aadhaar.value,
+pan:pan.value,
+education:edu.value,
+experience:exp.value,
+children:[],
+aadhaarFront:af.files[0]?await toBase64(af.files[0]):"",
+aadhaarBack:ab.files[0]?await toBase64(ab.files[0]):"",
+bankPassbook:bp.files[0]?await toBase64(bp.files[0]):"",
+photo:ph.files[0]?await toBase64(ph.files[0]):""
+};
+
+const res=await fetch(WEB_APP_URL,{method:"POST",body:JSON.stringify(data)});
+if(await res.text()=="SUCCESS"){
+alert("Submitted Successfully");
+document.getElementById("submit").classList.add("hidden");
+window.print();
+}
+};
+</script>
+</body>
+</html>
