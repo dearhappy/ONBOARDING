@@ -1,116 +1,382 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Worker Onboarding</title>
-
+<title>Worker Onboarding Form</title>
 <style>
-body{font-family:Arial;background:#f2f2f2}
-.box{max-width:480px;margin:auto;background:#fff;padding:20px}
-input,select,button{width:100%;padding:10px;margin-top:8px}
-button{background:#1a73e8;color:#fff;border:none}
+body { font-family: Arial, sans-serif; padding: 1em; }
+h1 { text-align: center; }
+form { display: flex; flex-direction: column; max-width: 600px; margin: auto; }
+label { margin-top: 1em; }
+input, select { padding: 0.5em; font-size: 1em; margin-top: 0.2em; }
+button { padding: 0.75em; font-size: 1em; margin-top: 1.5em; }
+button:disabled { opacity: 0.6; }
+.section { border: 1px solid #ccc; padding: 0.5em; margin-top: 1em; }
+.section h2 { margin: 0 0 0.5em; }
 </style>
 </head>
-
 <body>
-<div class="box">
-<h3>Worker Onboarding</h3>
-
-<form id="form">
-<input id="name" placeholder="Full Name" required>
-<input type="date" id="dob" required>
-
-<select id="gender">
-<option>Male</option><option>Female</option>
-</select>
-
-<input id="designation" placeholder="Designation">
-<input id="father" placeholder="Father Name">
-<input id="contact" placeholder="Contact No">
-
-<input id="emgName" placeholder="Emergency Contact Name">
-<input id="emgRel" placeholder="Relation">
-<input id="emgContact" placeholder="Emergency Contact No">
-
-<input id="state" placeholder="State">
-<input id="workLocation" placeholder="Work Location">
-
-<input id="bank" placeholder="Bank Name">
-<input id="account" placeholder="Account No">
-<input id="ifsc" placeholder="IFSC">
-
-<input id="uan" placeholder="UAN No">
-<input id="esi" placeholder="ESI / WC Policy">
-<input id="aadhaar" placeholder="Aadhaar No">
-<input id="pan" placeholder="PAN No">
-
-<input id="education" placeholder="Education">
-<input id="experience" placeholder="Scaffolding Experience">
-
-<input type="file" id="af">
-<input type="file" id="ab">
-<input type="file" id="bp">
-<input type="file" id="photo">
-
-<button id="submit">Submit</button>
+<h1>Worker Onboarding Form</h1>
+<form id="workerForm">
+  <label for="name">Name</label>
+  <input type="text" id="name" required>
+  
+  <label for="dob">Date of Birth</label>
+  <input type="date" id="dob" required>
+  
+  <label for="gender">Gender</label>
+  <select id="gender" required>
+    <option value="">Select</option>
+    <option>Male</option>
+    <option>Female</option>
+    <option>Other</option>
+  </select>
+  
+  <label for="designation">Designation</label>
+  <input type="text" id="designation" required>
+  
+  <label for="grade">Grade</label>
+  <input type="text" id="grade">
+  
+  <label for="bloodGroup">Blood Group</label>
+  <select id="bloodGroup" required>
+    <option value="">Select</option>
+    <option>A+</option><option>A-</option>
+    <option>B+</option><option>B-</option>
+    <option>AB+</option><option>AB-</option>
+    <option>O+</option><option>O-</option>
+  </select>
+  
+  <label for="maritalStatus">Marital Status</label>
+  <select id="maritalStatus" required>
+    <option value="">Select</option>
+    <option>Single</option>
+    <option>Married</option>
+    <option>Divorced</option>
+    <option>Widowed</option>
+  </select>
+  
+  <label for="fatherName">Father Name</label>
+  <input type="text" id="fatherName" required>
+  
+  <label for="contactNumber">Contact Number</label>
+  <input type="tel" id="contactNumber" required>
+  
+  <label for="emergencyName">Emergency Contact Name</label>
+  <input type="text" id="emergencyName" required>
+  
+  <label for="emergencyRelation">Emergency Contact Relation</label>
+  <input type="text" id="emergencyRelation" required>
+  
+  <label for="state">State</label>
+  <select id="state" required>
+    <option value="">Select</option>
+    <option>Gujarat</option>
+    <option>Maharashtra</option>
+    <option>Rajasthan</option>
+    <option>Delhi</option>
+    <option>Karnataka</option>
+    <option>Other</option>
+  </select>
+  
+  <label for="workLocation">Work Location</label>
+  <input type="text" id="workLocation" required>
+  
+  <label for="clientName">Client Name</label>
+  <input type="text" id="clientName" required>
+  
+  <label for="bankName">Bank Name</label>
+  <input type="text" id="bankName" required>
+  
+  <label for="accountNumber">Account Number</label>
+  <input type="text" id="accountNumber" required>
+  
+  <label for="ifscCode">IFSC Code</label>
+  <input type="text" id="ifscCode" required>
+  
+  <label for="uanNumber">UAN Number</label>
+  <input type="text" id="uanNumber">
+  
+  <label for="esiNumber">ESI/WC Policy Number</label>
+  <input type="text" id="esiNumber">
+  
+  <label for="aadhaarNumber">Aadhaar Number</label>
+  <input type="text" id="aadhaarNumber" required>
+  
+  <label for="panNumber">PAN Number</label>
+  <input type="text" id="panNumber" required>
+  
+  <label for="education">Education</label>
+  <input type="text" id="education" required>
+  
+  <label for="experience">Scaffolding Work Experience (years)</label>
+  <input type="number" id="experience" min="0" required>
+  
+  <div class="section">
+    <h2>Family Details</h2>
+    <label for="father2Name">Father Name</label>
+    <input type="text" id="father2Name">
+    
+    <label for="father2DOB">Father DOB</label>
+    <input type="date" id="father2DOB">
+    
+    <label for="motherName">Mother Name</label>
+    <input type="text" id="motherName">
+    
+    <label for="motherDOB">Mother DOB</label>
+    <input type="date" id="motherDOB">
+    
+    <label for="marriageDate">Date of Marriage</label>
+    <input type="date" id="marriageDate">
+    
+    <label for="wifeName">Wife Name</label>
+    <input type="text" id="wifeName">
+    
+    <label for="wifeDOB">Wife DOB</label>
+    <input type="date" id="wifeDOB">
+    
+    <label for="childrenCount">Number of Children</label>
+    <select id="childrenCount">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+    
+    <div id="child1Fields" style="display:none;">
+      <label for="child1Name">Child 1 Name</label>
+      <input type="text" id="child1Name">
+      <label for="child1Gender">Child 1 Gender</label>
+      <select id="child1Gender">
+        <option value="">Select</option><option>Son</option><option>Daughter</option>
+      </select>
+      <label for="child1DOB">Child 1 DOB</label>
+      <input type="date" id="child1DOB">
+    </div>
+    
+    <div id="child2Fields" style="display:none;">
+      <label for="child2Name">Child 2 Name</label>
+      <input type="text" id="child2Name">
+      <label for="child2Gender">Child 2 Gender</label>
+      <select id="child2Gender"><option value="">Select</option><option>Son</option><option>Daughter</option></select>
+      <label for="child2DOB">Child 2 DOB</label>
+      <input type="date" id="child2DOB">
+    </div>
+    
+    <div id="child3Fields" style="display:none;">
+      <label for="child3Name">Child 3 Name</label>
+      <input type="text" id="child3Name">
+      <label for="child3Gender">Child 3 Gender</label>
+      <select id="child3Gender"><option value="">Select</option><option>Son</option><option>Daughter</option></select>
+      <label for="child3DOB">Child 3 DOB</label>
+      <input type="date" id="child3DOB">
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Document Uploads</h2>
+    <label for="aadhaarFront">Aadhaar Front</label>
+    <input type="file" id="aadhaarFront" accept="image/*,.pdf" required>
+    <label for="aadhaarBack">Aadhaar Back</label>
+    <input type="file" id="aadhaarBack" accept="image/*,.pdf" required>
+    <label for="bankPassbook">Bank Passbook</label>
+    <input type="file" id="bankPassbook" accept="image/*,.pdf" required>
+    <label for="photo">Passport Size Photo</label>
+    <input type="file" id="photo" accept="image/*" required>
+  </div>
+  
+  <button type="button" id="submitButton">Submit</button>
 </form>
-</div>
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx1BIMh3xSkzNwWkbSbdXZPp-MCd_qbwwLaDM0q3m01UIHgOAtSNnX4lNsmZ2zYNvfD/exec";
-
-const toBase64 = f => new Promise(r=>{
-  if(!f) return r("");
-  const fr=new FileReader();
-  fr.onload=()=>r(fr.result);
-  fr.readAsDataURL(f);
+// Handle child fields visibility
+document.getElementById('childrenCount').addEventListener('change', function() {
+  var count = +this.value;
+  document.getElementById('child1Fields').style.display = count >= 1 ? 'block' : 'none';
+  document.getElementById('child2Fields').style.display = count >= 2 ? 'block' : 'none';
+  document.getElementById('child3Fields').style.display = count >= 3 ? 'block' : 'none';
 });
 
-form.onsubmit = async e => {
-  e.preventDefault();
-  submit.disabled = true;
-
-  const payload = {
-    name: name.value,
-    dob: dob.value,
-    gender: gender.value,
-    designation: designation.value,
-    father: father.value,
-    contact: contact.value,
-    emgName: emgName.value,
-    emgRel: emgRel.value,
-    emgContact: emgContact.value,
-    state: state.value,
-    workLocation: workLocation.value,
-    bank: bank.value,
-    account: account.value,
-    ifsc: ifsc.value,
-    uan: uan.value,
-    esi: esi.value,
-    aadhaar: aadhaar.value,
-    pan: pan.value,
-    education: education.value,
-    experience: experience.value,
-    af: await toBase64(af.files[0]),
-    ab: await toBase64(ab.files[0]),
-    bp: await toBase64(bp.files[0]),
-    photo: await toBase64(photo.files[0])
+// Form submission logic
+document.getElementById('submitButton').addEventListener('click', function() {
+  var button = this;
+  button.disabled = true;
+  button.textContent = 'Submitting...';
+  // Gather form data
+  var data = {
+    name: document.getElementById('name').value,
+    dob: document.getElementById('dob').value,
+    gender: document.getElementById('gender').value,
+    designation: document.getElementById('designation').value,
+    grade: document.getElementById('grade').value,
+    bloodGroup: document.getElementById('bloodGroup').value,
+    maritalStatus: document.getElementById('maritalStatus').value,
+    fatherName: document.getElementById('fatherName').value,
+    contactNumber: document.getElementById('contactNumber').value,
+    emergencyName: document.getElementById('emergencyName').value,
+    emergencyRelation: document.getElementById('emergencyRelation').value,
+    state: document.getElementById('state').value,
+    workLocation: document.getElementById('workLocation').value,
+    clientName: document.getElementById('clientName').value,
+    bankName: document.getElementById('bankName').value,
+    accountNumber: document.getElementById('accountNumber').value,
+    ifscCode: document.getElementById('ifscCode').value,
+    uanNumber: document.getElementById('uanNumber').value,
+    esiNumber: document.getElementById('esiNumber').value,
+    aadhaarNumber: document.getElementById('aadhaarNumber').value,
+    panNumber: document.getElementById('panNumber').value,
+    education: document.getElementById('education').value,
+    experience: document.getElementById('experience').value,
+    father2Name: document.getElementById('father2Name').value,
+    father2DOB: document.getElementById('father2DOB').value,
+    motherName: document.getElementById('motherName').value,
+    motherDOB: document.getElementById('motherDOB').value,
+    marriageDate: document.getElementById('marriageDate').value,
+    wifeName: document.getElementById('wifeName').value,
+    wifeDOB: document.getElementById('wifeDOB').value,
+    numberOfChildren: document.getElementById('childrenCount').value,
+    child1Name: document.getElementById('child1Name').value,
+    child1Gender: document.getElementById('child1Gender').value,
+    child1DOB: document.getElementById('child1DOB').value,
+    child2Name: document.getElementById('child2Name').value,
+    child2Gender: document.getElementById('child2Gender').value,
+    child2DOB: document.getElementById('child2DOB').value,
+    child3Name: document.getElementById('child3Name').value,
+    child3Gender: document.getElementById('child3Gender').value,
+    child3DOB: document.getElementById('child3DOB').value
   };
-
-  const res = await fetch(WEB_APP_URL, {
-    method:"POST",
-    body:JSON.stringify(payload)
+  // Convert file inputs to base64
+  var files = [
+    {id: 'aadhaarFront', key: 'aadhaarFront'},
+    {id: 'aadhaarBack', key: 'aadhaarBack'},
+    {id: 'bankPassbook', key: 'bankPassbook'},
+    {id: 'photo', key: 'photo'}
+  ];
+  var readFile = function(file) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var base64 = e.target.result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+  var promises = [];
+  files.forEach(function(f) {
+    var fileInput = document.getElementById(f.id);
+    if (fileInput.files.length > 0) {
+      var file = fileInput.files[0];
+      promises.push(
+        readFile(file).then(function(base64) {
+          data[f.key] = {name: file.name, type: file.type, data: base64};
+        })
+      );
+    }
   });
-
-  const out = await res.json();
-  if(out.status==="SUCCESS"){
-    submit.style.display="none";
-    window.open(out.pdf, "_blank");
-  } else {
-    alert("Error");
-    submit.disabled=false;
-  }
-};
+  // After reading files, send data
+  Promise.all(promises).then(function() {
+    fetch('https://script.google.com/macros/s/AKfycbx1BIMh3xSkzNwWkbSbdXZPp-MCd_qbwwLaDM0q3m01UIHgOAtSNnX4lNsmZ2zYNvfD/exec', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.status === 'SUCCESS') {
+        // Open print view of submitted data
+        var printWindow = window.open('', '_blank');
+        var html = '<html><head><title>Worker Details</title>';
+        html += '<style>@page { size: A4; margin: 20mm; } body { font-family: Arial, sans-serif; padding: 1em; } h2 { text-align: center; } table { width: 100%; border-collapse: collapse; } td { padding: 0.5em; border: 1px solid #ccc; vertical-align: top; } img { width: 100%; height: auto; margin-top: 1em; }</style>';
+        html += '</head><body>';
+        html += '<h2>Worker Details</h2>';
+        html += '<table>';
+        function rowHTML(label, value) {
+          return '<tr><td><strong>' + label + '</strong></td><td>' + (value || '') + '</td></tr>';
+        }
+        html += rowHTML('Name', data.name);
+        html += rowHTML('Date of Birth', data.dob);
+        html += rowHTML('Gender', data.gender);
+        html += rowHTML('Designation', data.designation);
+        html += rowHTML('Grade', data.grade);
+        html += rowHTML('Blood Group', data.bloodGroup);
+        html += rowHTML('Marital Status', data.maritalStatus);
+        html += rowHTML('Father Name', data.fatherName);
+        html += rowHTML('Contact Number', data.contactNumber);
+        html += rowHTML('Emergency Contact Name', data.emergencyName);
+        html += rowHTML('Emergency Contact Relation', data.emergencyRelation);
+        html += rowHTML('State', data.state);
+        html += rowHTML('Work Location', data.workLocation);
+        html += rowHTML('Client Name', data.clientName);
+        html += rowHTML('Bank Name', data.bankName);
+        html += rowHTML('Account Number', data.accountNumber);
+        html += rowHTML('IFSC Code', data.ifscCode);
+        html += rowHTML('UAN Number', data.uanNumber);
+        html += rowHTML('ESI/WC Policy Number', data.esiNumber);
+        html += rowHTML('Aadhaar Number', data.aadhaarNumber);
+        html += rowHTML('PAN Number', data.panNumber);
+        html += rowHTML('Education', data.education);
+        html += rowHTML('Scaffolding Experience', data.experience);
+        html += '</table>';
+        html += '<h2>Family Details</h2>';
+        html += '<table>';
+        html += rowHTML('Father Name', data.father2Name);
+        html += rowHTML('Father DOB', data.father2DOB);
+        html += rowHTML('Mother Name', data.motherName);
+        html += rowHTML('Mother DOB', data.motherDOB);
+        html += rowHTML('Date of Marriage', data.marriageDate);
+        html += rowHTML('Wife Name', data.wifeName);
+        html += rowHTML('Wife DOB', data.wifeDOB);
+        html += rowHTML('Number of Children', data.numberOfChildren);
+        if (data.numberOfChildren >= 1) {
+          html += rowHTML('Child 1 Name', data.child1Name);
+          html += rowHTML('Child 1 Gender', data.child1Gender);
+          html += rowHTML('Child 1 DOB', data.child1DOB);
+        }
+        if (data.numberOfChildren >= 2) {
+          html += rowHTML('Child 2 Name', data.child2Name);
+          html += rowHTML('Child 2 Gender', data.child2Gender);
+          html += rowHTML('Child 2 DOB', data.child2DOB);
+        }
+        if (data.numberOfChildren == 3) {
+          html += rowHTML('Child 3 Name', data.child3Name);
+          html += rowHTML('Child 3 Gender', data.child3Gender);
+          html += rowHTML('Child 3 DOB', data.child3DOB);
+        }
+        html += '</table>';
+        html += '<h2>Uploaded Documents</h2>';
+        if (data.aadhaarFront) {
+          html += '<div><strong>Aadhaar Front:</strong><br><img src="data:' + data.aadhaarFront.type + ';base64,' + data.aadhaarFront.data + '"></div>';
+        }
+        if (data.aadhaarBack) {
+          html += '<div><strong>Aadhaar Back:</strong><br><img src="data:' + data.aadhaarBack.type + ';base64,' + data.aadhaarBack.data + '"></div>';
+        }
+        if (data.bankPassbook) {
+          html += '<div><strong>Bank Passbook:</strong><br><img src="data:' + data.bankPassbook.type + ';base64,' + data.bankPassbook.data + '"></div>';
+        }
+        if (data.photo) {
+          html += '<div><strong>Photo:</strong><br><img src="data:' + data.photo.type + ';base64,' + data.photo.data + '"></div>';
+        }
+        html += '</body></html>';
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+      } else {
+        alert('Submission failed: ' + (result.message || 'Unknown error.'));
+        button.disabled = false;
+        button.textContent = 'Submit';
+      }
+    })
+    .catch(error => {
+      alert('Error: ' + error);
+      button.disabled = false;
+      button.textContent = 'Submit';
+    });
+  });
+});
 </script>
 </body>
 </html>
