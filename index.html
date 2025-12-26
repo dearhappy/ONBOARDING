@@ -1,573 +1,522 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Workers On-Boarding</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Employee Onboarding</title>
   <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #111111;
-      --muted: #666666;
-      --primary: #0b5fff;
-      --border: #e5e7eb;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--fg);
-      background: var(--bg);
-    }
-    header {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 600;
-    }
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-    .card {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    @media (min-width: 640px) {
-      .grid-2 { grid-template-columns: repeat(2, 1fr); }
-      .grid-3 { grid-template-columns: repeat(3, 1fr); }
-    }
-    label {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 14px;
-      background: #fff;
-    }
-    input[type="date"] { padding: 8px 10px; }
-    .section-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin: 8px 0 12px;
-    }
-    .row { margin-bottom: 12px; }
-    .actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-    }
-    button {
-      appearance: none;
-      border: none;
-      border-radius: 6px;
-      padding: 12px 16px;
-      font-size: 15px;
-      font-weight: 600;
-      color: #fff;
-      background: var(--primary);
-      cursor: pointer;
-    }
-    button[disabled] { opacity: 0.6; cursor: not-allowed; }
-    .note { font-size: 12px; color: var(--muted); }
-    .hidden { display: none !important; }
-    .success {
-      border: 1px solid #d1fae5;
-      background: #ecfdf5;
-      color: #065f46;
-      padding: 12px;
-      border-radius: 6px;
-      margin-top: 12px;
-    }
-    .printable h2 { margin: 0 0 8px; font-size: 18px; }
-    .printable table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-    }
-    .printable th, .printable td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      font-size: 13px;
-      text-align: left;
-      vertical-align: top;
-    }
-    .doc-links a { word-break: break-all; font-size: 12px; }
+    :root{--primary:#0b78e3;--ok:#0b9b2b;--err:#d0342c}
+    body{font-family:Inter,Arial,sans-serif;background:#f5f6f8;margin:0;padding:14px}
+    .card{max-width:920px;margin:18px auto;background:#fff;padding:20px;border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,0.08)}
+    h1{color:var(--primary);text-align:center;margin:0 0 12px;font-size:1.4rem}
+    label{display:block;margin-top:12px;font-weight:600}
+    input,select,textarea{width:100%;padding:14px;border-radius:10px;border:1px solid #d4d7db;margin-top:8px;font-size:1rem;box-sizing:border-box}
+    textarea{min-height:110px}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    .files{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .btn-row{display:flex;gap:12px;margin-top:18px;align-items:center}
+    button{flex:1;padding:14px;border-radius:10px;border:none;font-weight:700;background:var(--primary);color:#fff;font-size:1rem;cursor:pointer}
+    button[disabled]{opacity:.6;cursor:default}
+    .status{margin-top:14px;text-align:center;color:#222;font-weight:600}
+    .status.success{color:var(--ok)}
+    .status.error{color:var(--err)}
+    a.folder{display:inline-block;margin-top:8px;color:var(--primary);word-break:break-all}
+    .spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(0,0,0,0.08);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;vertical-align:middle;margin-left:8px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:640px){.row{flex-direction:column}button{width:100%}}
+    /* hidden iframe */
+    #submit_iframe{display:none;width:0;height:0;border:0}
+    /* snapshot styling for the JPEG */
+    .pdf-root{font-family:Arial,Helvetica,sans-serif;padding:18px;color:#111;background:#fff}
+    .pdf-root h2{margin-top:0;color:#0b78e3}
+    .pdf-table{width:100%;border-collapse:collapse;margin-top:8px}
+    .pdf-table td{padding:6px;border:1px solid #ddd;vertical-align:top}
+    .pdf-docs{margin-top:12px}
+    .pdf-thumb{max-width:300px;max-height:300px;border:1px solid #ddd;padding:4px;margin:6px}
+    .pdf-link{display:block;margin:6px 0;word-break:break-word}
   </style>
+
+  <!-- html2canvas for screenshot -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Workers On-Boarding</h1>
-  </header>
+  <div class="card" role="main" aria-labelledby="title">
+    <h1 id="title">Employee Onboarding</h1>
+    <p style="text-align:center;margin:6px 0 12px;color:#555">Fill details & upload documents. Tap Submit.</p>
 
-  <main>
-    <form id="onboardForm" class="card" autocomplete="on">
-      <div class="section-title">Personal details</div>
-      <div class="grid grid-2">
-        <div class="row">
-          <label>Name</label>
-          <input type="text" name="Name" required>
+    <!-- ACTION: your Apps Script Web App exec URL -->
+    <form id="empForm" method="post"
+          action="https://script.google.com/macros/s/AKfycbx1BIMh3xSkzNwWkbSbdXZPp-MCd_qbwwLaDM0q3m01UIHgOAtSNnX4lNsmZ2zYNvfD/exec"
+          target="submit_iframe" enctype="application/x-www-form-urlencoded" autocomplete="off">
+      <label>Employee Name (As per Aadhar)
+        <input name="employeeName" type="text" placeholder="Full name as on Aadhar" />
+      </label>
+
+      <div class="row">
+        <div class="col">
+          <label>Date of Birth
+            <input name="dob" type="date" />
+          </label>
         </div>
-        <div class="row">
-          <label>Date of Birth</label>
-          <input type="date" name="Date of Birth" required>
-        </div>
-        <div class="row">
-          <label>Gender</label>
-          <select name="Gender" required>
-            <option value="">Select</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Designation</label>
-          <input type="text" name="Designation" required>
-        </div>
-        <div class="row">
-          <label>Grade</label>
-          <select name="Grade" required>
-            <option value="">Select</option>
-            <option>Unskilled</option>
-            <option>Semi-skilled</option>
-            <option>Skilled</option>
-            <option>Supervisor</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Blood Group</label>
-          <select name="Blood Group" required>
-            <option value="">Select</option>
-            <option>A+</option><option>A-</option>
-            <option>B+</option><option>B-</option>
-            <option>O+</option><option>O-</option>
-            <option>AB+</option><option>AB-</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Marital Status</label>
-          <select name="Marital Status" required>
-            <option value="">Select</option>
-            <option>Single</option>
-            <option>Married</option>
-            <option>Divorced</option>
-            <option>Widowed</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Father Name</label>
-          <input type="text" name="Father Name" required>
-        </div>
-        <div class="row">
-          <label>Contact Number</label>
-          <input type="tel" name="Contact Number" pattern="[0-9]{10}" required>
-        </div>
-        <div class="row">
-          <label>Emergency Contact Name</label>
-          <input type="text" name="Emergency Contact Name" required>
-        </div>
-        <div class="row">
-          <label>Emergency Contact Relation</label>
-          <select name="Emergency Contact Relation" required>
-            <option value="">Select</option>
-            <option>Father</option>
-            <option>Mother</option>
-            <option>Spouse</option>
-            <option>Sibling</option>
-            <option>Friend</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>State</label>
-          <select name="State" required>
-            <option value="">Select</option>
-            <option>Gujarat</option>
-            <option>Maharashtra</option>
-            <option>Rajasthan</option>
-            <option>Madhya Pradesh</option>
-            <option>Uttar Pradesh</option>
-            <option>Punjab</option>
-            <option>Haryana</option>
-            <option>Delhi</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Work Location</label>
-          <input type="text" name="Work Location" required>
-        </div>
-        <div class="row">
-          <label>Client Name</label>
-          <input type="text" name="Client Name" required>
+        <div class="col">
+          <label>Blood Group
+            <input name="bloodGroup" type="text" placeholder="O+" />
+          </label>
         </div>
       </div>
 
-      <div class="section-title">Bank & statutory</div>
-      <div class="grid grid-2">
-        <div class="row">
-          <label>Bank Name</label>
-          <input type="text" name="Bank Name" required>
-        </div>
-        <div class="row">
-          <label>Account Number</label>
-          <input type="text" name="Account Number" required>
-        </div>
-        <div class="row">
-          <label>IFSC Code</label>
-          <input type="text" name="IFSC Code" required>
-        </div>
-        <div class="row">
-          <label>UAN Number</label>
-          <input type="text" name="UAN Number">
-        </div>
-        <div class="row">
-          <label>ESI No / WC Policy</label>
-          <input type="text" name="ESI No / WC Policy">
-        </div>
-        <div class="row">
-          <label>Aadhaar Number</label>
-          <input type="text" name="Aadhaar Number" required>
-        </div>
-        <div class="row">
-          <label>PAN Number</label>
-          <input type="text" name="PAN Number">
-        </div>
-        <div class="row">
-          <label>Education</label>
-          <select name="Education" required>
-            <option value="">Select</option>
-            <option>Primary</option>
-            <option>Secondary</option>
-            <option>Higher Secondary</option>
-            <option>Diploma</option>
-            <option>Graduate</option>
-            <option>Postgraduate</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Scaffolding Work Experience</label>
-          <select name="Scaffolding Work Experience" required>
-            <option value="">Select</option>
-            <option>0-6 months</option>
-            <option>6-12 months</option>
-            <option>1-2 years</option>
-            <option>2-5 years</option>
-            <option>5+ years</option>
-          </select>
-        </div>
+      <label>Marital Status
+        <select name="maritalStatus"><option value="">-- select --</option><option>Single</option><option>Married</option><option>Widowed</option><option>Divorced</option></select>
+      </label>
+
+      <label>Father name
+        <input name="fatherName" type="text" />
+      </label>
+      <label>Permanent Address
+        <textarea name="permanentAddress" placeholder="House, Street, City, PIN"></textarea>
+      </label>
+
+      <div class="row">
+        <div class="col"><label>Contact No<input name="contactNo" type="text" inputmode="tel" /></label></div>
+        <div class="col"><label>Emergency Contact No<input name="emergencyContactNo" type="text" inputmode="tel" /></label></div>
       </div>
 
-      <div class="section-title">Family details</div>
-      <div class="grid grid-2">
-        <div class="row">
-          <label>Father Name & DOB</label>
-          <input type="text" name="Father Name & DOB">
-        </div>
-        <div class="row">
-          <label>Mother Name & DOB</label>
-          <input type="text" name="Mother Name & DOB">
-        </div>
-        <div class="row">
-          <label>Date of Marriage</label>
-          <input type="date" name="Date of Marriage">
-        </div>
-        <div class="row">
-          <label>Wife Name & DOB</label>
-          <input type="text" name="Wife Name & DOB">
-        </div>
-        <div class="row">
-          <label>Number of Children</label>
-          <select name="Number of Children">
-            <option value="">Select</option>
-            <option>0</option><option>1</option><option>2</option><option>3</option>
-          </select>
-        </div>
+      <label>Relation with Emergency Contact<input name="emergencyRelation" type="text" /></label>
+      <label>Name of Emergency Contact<input name="emergencyName" type="text" /></label>
+      <label>State<input name="state" type="text" /></label>
+
+      <h3 style="margin-top:12px">Bank & Govt Info</h3>
+      <label>Bank Name<input name="bankName" type="text" /></label>
+      <label>Account No<input name="accountNo" type="text" /></label>
+      <label>IFSC Code<input name="ifsc" type="text" /></label>
+      <label>UAN Number<input name="uan" type="text" /></label>
+      <label>ESI No/ WC POLICY<input name="esi" type="text" /></label>
+      <label>Aadhar No<input name="aadharNo" type="text" inputmode="numeric" /></label>
+
+      <h3 style="margin-top:10px">Family</h3>
+      <label>Father name (repeat)<input name="fatherNameRepeat" type="text" /></label>
+
+      <div class="row">
+        <div class="col"><label>Father DOB<input name="fatherDob" type="date" /></label></div>
+        <div class="col"><label>Mother DOB<input name="motherDob" type="date" /></label></div>
       </div>
 
-      <div class="grid grid-3">
-        <div class="row">
-          <label>Child 1 Name</label>
-          <input type="text" name="Child 1 Name">
-        </div>
-        <div class="row">
-          <label>Child 1 Gender</label>
-          <select name="Child 1 Gender">
-            <option value="">Select</option>
-            <option>Son</option><option>Daughter</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Child 1 DOB</label>
-          <input type="date" name="Child 1 DOB">
-        </div>
+      <label>Mother Name<input name="motherName" type="text" /></label>
+      <label>Date of Marriage<input name="marriageDate" type="date" /></label>
+      <label>Wife Name<input name="wifeName" type="text" /></label>
+      <label>Wife DOB<input name="wifeDob" type="date" /></label>
 
-        <div class="row">
-          <label>Child 2 Name</label>
-          <input type="text" name="Child 2 Name">
-        </div>
-        <div class="row">
-          <label>Child 2 Gender</label>
-          <select name="Child 2 Gender">
-            <option value="">Select</option>
-            <option>Son</option><option>Daughter</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Child 2 DOB</label>
-          <input type="date" name="Child 2 DOB">
-        </div>
+      <label>No. Childrens<input name="noChildren" type="text" /></label>
 
-        <div class="row">
-          <label>Child 3 Name</label>
-          <input type="text" name="Child 3 Name">
-        </div>
-        <div class="row">
-          <label>Child 3 Gender</label>
-          <select name="Child 3 Gender">
-            <option value="">Select</option>
-            <option>Son</option><option>Daughter</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>Child 3 DOB</label>
-          <input type="date" name="Child 3 DOB">
-        </div>
+      <h4>Child 1</h4>
+      <label>Child 1 Name<input name="child1Name" type="text" /></label>
+      <label>Son/Daughter<input name="child1Gender" type="text" /></label>
+      <label>Child 1 DOB<input name="child1Dob" type="date" /></label>
+
+      <h4>Child 2</h4>
+      <label>Child 2 Name<input name="child2Name" type="text" /></label>
+      <label>Son/Daughter<input name="child2Gender" type="text" /></label>
+      <label>Child 2 DOB<input name="child2Dob" type="date" /></label>
+
+      <h4>Child 3</h4>
+      <label>Child 3 Name<input name="child3Name" type="text" /></label>
+      <label>Son/Daughter<input name="child3Gender" type="text" /></label>
+      <label>Child 3 DOB<input name="child3Dob" type="date" /></label>
+
+      <label>Education<input name="education" type="text" /></label>
+      <label>Scaffolding Work Experience<input name="workExperience" type="text" /></label>
+<!-- START: hidden fields to match sheet mapping - paste inside your <form id="empForm"> -->
+<div id="extraFieldsForSheet" style="display:none">
+  <input name="dateOfJoining" />
+  <input name="designation" />
+  <input name="grade" />
+  <input name="gender" />
+  <input name="projectCode" />
+  <input name="grossSalary" />
+  <input name="currentAddress" />
+  <input name="projectCode2" />
+  <input name="workLocation" />
+  <input name="clientName" />
+  <input name="pfLocation" />
+  <input name="uanRemarks" />
+  <input name="esiRemark" />
+  <input name="panNumber" />
+  <input name="email" />
+  <!-- If you already have fatherNameRepeat or projectCode2 fields visible, remove duplicates -->
+</div>
+<!-- END -->
+
+      <h3 style="margin-top:12px">Upload Documents</h3>
+      <div class="files">
+        <label>Adhaar Front<input id="adhaarFront" type="file" accept="image/*,application/pdf" /></label>
+        <label>Adhaar Back<input id="adhaarBack" type="file" accept="image/*,application/pdf" /></label>
+        <label>Bank Passbook<input id="bankPassbook" type="file" accept="image/*,application/pdf" /></label>
+        <label>Passport Size Photo<input id="photo" type="file" accept="image/*" /></label>
       </div>
 
-      <div class="section-title">Document uploads (mandatory)</div>
-      <div class="grid grid-2">
-        <div class="row">
-          <label>Aadhaar Front</label>
-          <input type="file" name="Aadhaar Front" accept="image/*,application/pdf" required>
-        </div>
-        <div class="row">
-          <label>Aadhaar Back</label>
-          <input type="file" name="Aadhaar Back" accept="image/*,application/pdf" required>
-        </div>
-        <div class="row">
-          <label>Bank Passbook</label>
-          <input type="file" name="Bank Passbook" accept="image/*,application/pdf" required>
-        </div>
-        <div class="row">
-          <label>Passport Size Photo</label>
-          <input type="file" name="Passport Size Photo" accept="image/*" required>
-        </div>
+      <!-- hidden inputs for base64 files -->
+      <div id="hiddenInputs" style="display:none"></div>
+
+      <div class="btn-row" aria-live="polite">
+        <button id="submitBtn" type="button">Submit</button>
       </div>
 
-      <div class="note">Submission runs until data and files are saved. Do not refresh during submission.</div>
-
-      <div class="actions">
-        <button id="submitBtn" type="submit">Submit</button>
-      </div>
-
-      <div id="status" class="success hidden">Submitted successfully.</div>
+      <div id="status" class="status" aria-atomic="true"></div>
+      <div id="folderLink" style="text-align:center;margin-top:8px"></div>
     </form>
 
-    <section id="printSection" class="card hidden printable"></section>
-  </main>
+    <!-- hidden iframe -->
+    <iframe name="submit_iframe" id="submit_iframe"></iframe>
+  </div>
 
-  <script>
-    // Replace with your deployed Apps Script Web App URL
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx1BIMh3xSkzNwWkbSbdXZPp-MCd_qbwwLaDM0q3m01UIHgOAtSNnX4lNsmZ2zYNvfD/exec';
+<script>
+  // read file as dataURL
+  function readFileAsDataURL(file) {
+    return new Promise(function(resolve, reject) {
+      if (!file) return resolve(null);
+      var reader = new FileReader();
+      reader.onload = function(e) { resolve(e.target.result); };
+      reader.onerror = function(e) { reject(e); };
+      reader.readAsDataURL(file);
+    });
+  }
 
-    const formEl = document.getElementById('onboardForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const statusEl = document.getElementById('status');
-    const printSection = document.getElementById('printSection');
+  // snapshot visible form fields
+  function snapshotFormData() {
+    const form = document.getElementById('empForm');
+    const snap = {};
+    Array.from(form.elements).forEach(el => {
+      if (!el.name) return;
+      if (el.name.indexOf('file_') === 0) return;
+      if (el.type === 'file') return;
+      if (el.type === 'button' || el.type === 'submit') return;
+      if (el.type === 'checkbox') { snap[el.name] = el.checked; return; }
+      snap[el.name] = el.value || '';
+    });
+    return snap;
+  }
 
-    let submissionLocked = false;
+  // build the DOM element to screenshot (same layout as previous PDF)
+  function buildSnapshotElement(formSnapshot, serverResult, localFiles) {
+    const container = document.createElement('div');
+    container.className = 'pdf-root';
+    container.style.width = '1000px'; // fixed width to make full-page screenshot consistent
+    container.style.boxSizing = 'border-box';
+    container.style.background = '#fff';
+    container.innerHTML = '';
 
-    formEl.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (submissionLocked) return;
+    const title = document.createElement('h2');
+    title.textContent = 'Employee Onboarding — Submission';
+    container.appendChild(title);
 
-      // Basic required file validation
-      const files = {
-        aadhaarFront: formEl.querySelector('input[name="Aadhaar Front"]').files[0],
-        aadhaarBack: formEl.querySelector('input[name="Aadhaar Back"]').files[0],
-        bankPassbook: formEl.querySelector('input[name="Bank Passbook"]').files[0],
-        passportPhoto: formEl.querySelector('input[name="Passport Size Photo"]').files[0]
-      };
-      if (!files.aadhaarFront || !files.aadhaarBack || !files.bankPassbook || !files.passportPhoto) {
-        alert('Please upload all mandatory documents.');
-        return;
+    const meta = document.createElement('div');
+    meta.textContent = 'Generated: ' + new Date().toLocaleString();
+    container.appendChild(meta);
+
+    const table = document.createElement('table');
+    table.className = 'pdf-table';
+    function addRow(label, value) {
+      const tr = document.createElement('tr');
+      const td1 = document.createElement('td'); td1.style.width='40%'; td1.textContent = label;
+      const td2 = document.createElement('td'); td2.textContent = value || '';
+      tr.appendChild(td1); tr.appendChild(td2); table.appendChild(tr);
+    }
+
+    const fields = [
+      ['Employee Name (As per Aadhar)','employeeName'],
+      ['Date of Birth','dob'],
+      ['Blood Group','bloodGroup'],
+      ['Marital Status','maritalStatus'],
+      ['Father Name','fatherName'],
+      ['Permanent Address','permanentAddress'],
+      ['Contact No','contactNo'],
+      ['Emergency Contact No','emergencyContactNo'],
+      ['Relation with Emergency Contact','emergencyRelation'],
+      ['Name of Emergency Contact','emergencyName'],
+      ['State','state'],
+      ['Bank Name','bankName'],
+      ['Account No','accountNo'],
+      ['IFSC Code','ifsc'],
+      ['UAN Number','uan'],
+      ['ESI No/ WC POLICY','esi'],
+      ['Aadhar No','aadharNo'],
+      ['Father Name (repeat)','fatherNameRepeat'],
+      ['Father DOB','fatherDob'],
+      ['Mother Name','motherName'],
+      ['Mother DOB','motherDob'],
+      ['Date of Marriage','marriageDate'],
+      ['Wife Name','wifeName'],
+      ['Wife DOB','wifeDob'],
+      ['No. Childrens','noChildren'],
+      ['Child 1 Name','child1Name'],
+      ['Child 1 Son/Daughter','child1Gender'],
+      ['Child 1 DOB','child1Dob'],
+      ['Child 2 Name','child2Name'],
+      ['Child 2 Son/Daughter','child2Gender'],
+      ['Child 2 DOB','child2Dob'],
+      ['Child 3 Name','child3Name'],
+      ['Child 3 Son/Daughter','child3Gender'],
+      ['Child 3 DOB','child3Dob'],
+      ['Education','education'],
+      ['Scaffolding Work Experience','workExperience']
+    ];
+
+    for (const f of fields) addRow(f[0], formSnapshot[f[1]]);
+
+    if (serverResult && serverResult.serial) addRow('Serial', serverResult.serial);
+    if (serverResult && serverResult.folderUrl) addRow('Employee Folder URL', serverResult.folderUrl);
+
+    container.appendChild(table);
+
+    const docs = document.createElement('div'); docs.className = 'pdf-docs';
+    const docsTitle = document.createElement('h3'); docsTitle.textContent = 'Documents';
+    docs.appendChild(docsTitle);
+    const docsInner = document.createElement('div');
+
+    if (serverResult && serverResult.fileUrls && serverResult.fileUrls.length) {
+      const arr = serverResult.fileUrls;
+      const labels = ['Adhaar Front','Adhaar Back','Bank Passbook','Passport Photo'];
+      for (let i=0;i<arr.length;i++) {
+        const link = document.createElement('a');
+        link.href = arr[i] || '#';
+        link.textContent = labels[i] + ' — ' + (arr[i] ? arr[i] : 'Not available');
+        link.className = 'pdf-link';
+        link.target = '_blank';
+        docsInner.appendChild(link);
       }
-
-      // Lock submission
-      submissionLocked = true;
-      submitBtn.classList.add('hidden');
-      submitBtn.disabled = true;
-
-      try {
-        const formData = collectFormData(formEl);
-        const filePayload = {
-          aadhaarFront: await fileToBase64(files.aadhaarFront),
-          aadhaarBack: await fileToBase64(files.aadhaarBack),
-          bankPassbook: await fileToBase64(files.bankPassbook),
-          passportPhoto: await fileToBase64(files.passportPhoto)
-        };
-
-        const payload = {
-          form: formData,
-          files: {
-            aadhaarFront: {
-              name: files.aadhaarFront.name,
-              mimeType: files.aadhaarFront.type,
-              data: filePayload.aadhaarFront
-            },
-            aadhaarBack: {
-              name: files.aadhaarBack.name,
-              mimeType: files.aadhaarBack.type,
-              data: filePayload.aadhaarBack
-            },
-            bankPassbook: {
-              name: files.bankPassbook.name,
-              mimeType: files.bankPassbook.type,
-              data: filePayload.bankPassbook
-            },
-            passportPhoto: {
-              name: files.passportPhoto.name,
-              mimeType: files.passportPhoto.type,
-              data: filePayload.passportPhoto
-            }
-          }
-        };
-
-        const res = await fetch(WEB_APP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await res.json();
-        if (json.status !== 'SUCCESS') {
-          throw new Error(json.message || 'Submission failed');
+    } else {
+      const labels = { adhaarFront:'Adhaar Front', adhaarBack:'Adhaar Back', bankPassbook:'Bank Passbook', photo:'Passport Photo' };
+      let any = false;
+      for (const key in labels) {
+        if (localFiles && localFiles[key]) {
+          any = true;
+          const img = document.createElement('img');
+          img.src = localFiles[key];
+          img.alt = labels[key];
+          img.className = 'pdf-thumb';
+          docsInner.appendChild(img);
+          const caption = document.createElement('div'); caption.textContent = labels[key]; docsInner.appendChild(caption);
         }
+      }
+      if (!any) {
+        const none = document.createElement('div'); none.textContent = 'No documents attached.'; docsInner.appendChild(none);
+      }
+    }
 
-        statusEl.classList.remove('hidden');
-        renderPrintable(formData, json.serial, json.fileUrls);
-        autoDownloadPrintable();
-        window.print();
+    docs.appendChild(docsInner);
+    container.appendChild(docs);
 
+    return container;
+  }
+
+  // generate and download JPEG from snapshot element. returns Promise
+  function generateAndDownloadJPEG(formSnapshot, serverResult, localFiles) {
+    return new Promise((resolve, reject) => {
+      try {
+        const safeName = (formSnapshot.employeeName && formSnapshot.employeeName.trim()) ? formSnapshot.employeeName.trim().replace(/\s+/g,'_') : 'employee_onboarding';
+        const filename = safeName + '_onboarding.jpg';
+        const el = buildSnapshotElement(formSnapshot, serverResult, localFiles);
+
+        // append off-screen but visible to renderer
+        el.style.position = 'fixed';
+        el.style.left = '-9999px';
+        el.style.top = '0';
+        document.body.appendChild(el);
+
+        // use html2canvas to capture the element at a high scale for quality
+        const scale = Math.min(window.devicePixelRatio || 1, 2); // limit scale to 2 for performance
+        html2canvas(el, { scale: 2, useCORS: true, allowTaint: true, logging: false }).then(canvas => {
+          try {
+            // convert to JPEG dataURL
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+            // create download link and click
+            const a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => { try { a.remove(); } catch(e){} }, 800);
+            // cleanup snapshot element
+            try { document.body.removeChild(el); } catch(e){}
+            resolve();
+          } catch (err) {
+            try { document.body.removeChild(el); } catch(e){}
+            reject(err);
+          }
+        }).catch(err => {
+          try { document.body.removeChild(el); } catch(e){}
+          reject(err);
+        });
       } catch (err) {
-        alert('Submission error: ' + String(err));
-        // Keep button hidden to prevent duplicate entries; refresh to retry
+        reject(err);
       }
     });
+  }
 
-    function collectFormData(form) {
-      const data = {};
-      const fields = form.querySelectorAll('input[name], select[name]');
-      fields.forEach(el => {
-        const name = el.getAttribute('name');
-        if (el.type === 'file') return;
-        data[name] = el.value || '';
-      });
-
-      // Sheet-only fields (not visible in UI) — keep empty placeholders
-      const sheetOnly = [
-        'Date of Joining','Project Code','Gross Salary','Current Address','Worker Location',
-        'PF Location','UAN Remarks','ESI Remarks','Email ID'
-      ];
-      sheetOnly.forEach(k => { if (!(k in data)) data[k] = ''; });
-
-      return data;
-    }
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64 = reader.result.split(',')[1];
-          resolve(base64);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function renderPrintable(formData, serial, fileUrls) {
-      const rows = [];
-      const showFields = [
-        'Serial','Name','Date of Birth','Gender','Designation','Grade','Blood Group','Marital Status',
-        'Father Name','Contact Number','Emergency Contact Name','Emergency Contact Relation','State',
-        'Work Location','Client Name','Bank Name','Account Number','IFSC Code','UAN Number',
-        'ESI No / WC Policy','Aadhaar Number','PAN Number','Education','Scaffolding Work Experience',
-        'Father Name & DOB','Mother Name & DOB','Date of Marriage','Wife Name & DOB','Number of Children',
-        'Child 1 Name','Child 1 Gender','Child 1 DOB','Child 2 Name','Child 2 Gender','Child 2 DOB',
-        'Child 3 Name','Child 3 Gender','Child 3 DOB'
-      ];
-
-      const merged = Object.assign({}, formData);
-      merged['Serial'] = serial;
-
-      showFields.forEach(k => {
-        rows.push(`<tr><th>${escapeHtml(k)}</th><td>${escapeHtml(merged[k] || '')}</td></tr>`);
-      });
-
-      const docsHtml = `
-        <div class="doc-links">
-          <p><strong>Aadhaar Front:</strong> <a href="${fileUrls.aadhaarFront}" target="_blank">${fileUrls.aadhaarFront}</a></p>
-          <p><strong>Aadhaar Back:</strong> <a href="${fileUrls.aadhaarBack}" target="_blank">${fileUrls.aadhaarBack}</a></p>
-          <p><strong>Bank Passbook:</strong> <a href="${fileUrls.bankPassbook}" target="_blank">${fileUrls.bankPassbook}</a></p>
-          <p><strong>Passport Photo:</strong> <a href="${fileUrls.passportPhoto}" target="_blank">${fileUrls.passportPhoto}</a></p>
-        </div>
-      `;
-
-      printSection.innerHTML = `
-        <h2>On-Boarding Form</h2>
-        <table>${rows.join('')}</table>
-        <h3 style="margin-top:12px;">Attached documents</h3>
-        ${docsHtml}
-      `;
-      printSection.classList.remove('hidden');
-    }
-
-    function autoDownloadPrintable() {
-      const html = `
-        <!doctype html>
-        <html><head><meta charset="utf-8"><title>On-Boarding</title></head>
-        <body>${printSection.innerHTML}</body></html>
-      `;
-      const blob = new Blob([html], { type: 'text/html' });
+  // fallback: download tiny text file with .jpg extension if html2canvas fails
+  function fallbackDownloadAsJpg(formSnapshot) {
+    try {
+      const safeName = (formSnapshot.employeeName && formSnapshot.employeeName.trim()) ? formSnapshot.employeeName.trim().replace(/\s+/g,'_') : 'employee_onboarding';
+      const filename = safeName + '_onboarding.jpg';
+      const txt = 'Employee Onboarding\n\n' + JSON.stringify(formSnapshot, null, 2);
+      const blob = new Blob([txt], { type: 'image/jpeg' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'onboarding.html';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        URL.revokeObjectURL(url);
-        a.remove();
-      }, 1000);
+      const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('fallback jpg download failed', err);
+    }
+  }
+
+  // helper that tries html2canvas then falls back
+  function triggerDownloadJPEG(formSnapshot, serverResult, localFiles) {
+    return generateAndDownloadJPEG(formSnapshot, serverResult, localFiles).catch(err => {
+      console.warn('html2canvas failed, falling back to text .jpg', err);
+      fallbackDownloadAsJpg(formSnapshot);
+    });
+  }
+
+  // UI helpers
+  function snapshotFormDataSimple() {
+    return snapshotFormData();
+  }
+
+  function setSubmitting(isSubmitting) {
+    const btn = document.getElementById('submitBtn');
+    if (isSubmitting) {
+      btn.setAttribute('disabled','disabled');
+      btn.innerHTML = 'Uploading <span class="spinner" aria-hidden="true"></span>';
+    } else {
+      btn.removeAttribute('disabled');
+      btn.innerHTML = 'Submit';
+    }
+  }
+
+  // main flow with 20s forced-complete and ensured JPEG download
+  document.getElementById('submitBtn').addEventListener('click', async function() {
+    const statusEl = document.getElementById('status');
+    const folderEl = document.getElementById('folderLink');
+    statusEl.className = 'status';
+    statusEl.textContent = 'Preparing...';
+    folderEl.innerHTML = '';
+
+    setSubmitting(true);
+
+    const formSnapshot = snapshotFormDataSimple();
+    const localFiles = {};
+
+    // prepare hidden file inputs
+    const hidden = document.getElementById('hiddenInputs'); hidden.innerHTML = '';
+    const fileMap = [
+      { id: 'adhaarFront', type: 'adhaarFront' },
+      { id: 'adhaarBack',  type: 'adhaarBack' },
+      { id: 'bankPassbook', type: 'bankPassbook' },
+      { id: 'photo', type: 'photo' }
+    ];
+    try {
+      for (let entry of fileMap) {
+        const el = document.getElementById(entry.id);
+        if (el && el.files && el.files[0]) {
+          const f = el.files[0];
+          const dataUrl = await readFileAsDataURL(f);
+          localFiles[entry.type] = dataUrl;
+          const b64 = document.createElement('input'); b64.type='hidden'; b64.name = 'file_' + entry.type + '_b64'; b64.value = dataUrl;
+          const nm = document.createElement('input'); nm.type='hidden'; nm.name = 'file_' + entry.type + '_name'; nm.value = f.name;
+          const mt = document.createElement('input'); mt.type='hidden'; mt.name = 'file_' + entry.type + '_type'; mt.value = f.type || 'application/octet-stream';
+          hidden.appendChild(b64); hidden.appendChild(nm); hidden.appendChild(mt);
+        }
+      }
+    } catch (err) {
+      console.error('file read fail', err);
+      statusEl.className = 'status error';
+      statusEl.textContent = 'File read error. Try smaller files or different browser.';
+      setSubmitting(false);
+      return;
     }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    statusEl.textContent = 'Uploading...';
+
+    // forced 20s timer: now uses guaranteed JPEG download (html2canvas or fallback)
+    let forcedComplete = false;
+    let downloadTriggered = false;
+    const forcedTimer = setTimeout(function() {
+      forcedComplete = true;
+      statusEl.className = 'status success';
+      statusEl.textContent = '✅ Onboarding complete (automatic)';
+
+      // ensure JPEG download happens (try html2canvas -> fallback)
+      triggerDownloadJPEG(formSnapshot, null, localFiles).then(() => {
+        downloadTriggered = true;
+      }).catch(err => {
+        console.warn('forced JPEG failed', err);
+      });
+      // continue listening for server to update folder/serial
+    }, 20000);
+
+    // message listener from iframe
+    function onMessage(ev) {
+      try {
+        let data = ev.data;
+        if (typeof data === 'string') {
+          try { data = JSON.parse(data); } catch(e) { /* ignore */ }
+        }
+        clearTimeout(forcedTimer);
+
+        // If forcedComplete already fired, update UI but do not re-download
+        if (forcedComplete) {
+          if (data && data.success) {
+            if (data.folderUrl) folderEl.innerHTML = '<a class="folder" href="' + encodeURI(data.folderUrl) + '" target="_blank" rel="noopener">Open employee folder</a>';
+          } else {
+            console.warn('Server returned failure after forced success:', data);
+          }
+          setSubmitting(false);
+          window.removeEventListener('message', onMessage);
+          return;
+        }
+
+        // normal server response before 20s
+        window.removeEventListener('message', onMessage);
+        setSubmitting(false);
+
+        if (data && data.success) {
+          statusEl.className = 'status success';
+          statusEl.textContent = '✅ Onboarding complete — Serial: ' + (data.serial || 'N/A');
+          if (data.folderUrl) folderEl.innerHTML = '<a class="folder" href="' + encodeURI(data.folderUrl) + '" target="_blank" rel="noopener">Open employee folder</a>';
+
+          // generate JPEG with serverResult + any localFiles
+          if (!downloadTriggered) {
+            triggerDownloadJPEG(formSnapshot, data, localFiles).then(() => {
+              downloadTriggered = true;
+            }).catch(err => { console.warn('JPEG error', err); });
+          }
+          try { document.getElementById('empForm').reset(); } catch(e){}
+        } else {
+          statusEl.className = 'status error';
+          statusEl.textContent = '❌ Save failed: ' + ((data && data.error) ? data.error : JSON.stringify(data));
+        }
+      } catch (err) {
+        console.error('message handling error', err);
+        clearTimeout(forcedTimer);
+        window.removeEventListener('message', onMessage);
+        setSubmitting(false);
+        statusEl.className = 'status error';
+        statusEl.textContent = 'Error reading response';
+      }
     }
-  </script>
+
+    window.addEventListener('message', onMessage, false);
+
+    // submit to iframe
+    try {
+      document.getElementById('empForm').submit();
+    } catch (err) {
+      clearTimeout(forcedTimer);
+      window.removeEventListener('message', onMessage);
+      setSubmitting(false);
+      statusEl.className = 'status error';
+      statusEl.textContent = 'Submission failed: ' + (err && err.message ? err.message : String(err));
+    }
+  });
+</script>
 </body>
 </html>
